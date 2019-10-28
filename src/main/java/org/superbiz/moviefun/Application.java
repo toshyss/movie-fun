@@ -8,10 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.superbiz.moviefun.blobstore.BlobStore;
 import org.superbiz.moviefun.blobstore.S3Store;
 import org.superbiz.moviefun.blobstore.ServiceCredentials;
 
+@Configuration
 @SpringBootApplication
 public class Application {
 
@@ -22,6 +24,12 @@ public class Application {
     @Bean
     public ServletRegistrationBean actionServletRegistration(ActionServlet actionServlet) {
         return new ServletRegistrationBean(actionServlet, "/moviefun/*");
+    }
+
+    @Bean
+    //${vcap.services} retrieves the corresponding environmental variable
+    ServiceCredentials serviceCredentials(@Value("${vcap.services}") String vcapServices){
+        return new ServiceCredentials(vcapServices);
     }
 
     @Bean

@@ -1,6 +1,5 @@
 package org.superbiz.moviefun.albums;
 
-import jdk.internal.util.xml.impl.Input;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -10,15 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.superbiz.moviefun.blobstore.Blob;
+import org.superbiz.moviefun.blobstore.BlobStore;
 import org.superbiz.moviefun.blobstore.S3Store;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,12 +30,12 @@ public class AlbumsController {
     private final AlbumsBean albumsBean;
 
     @Autowired
-    private S3Store s3Store;
-
+    private BlobStore s3Store;
 
     public AlbumsController(AlbumsBean albumsBean) {
         this.albumsBean = albumsBean;
     }
+
 
     @GetMapping
     public String index(Map<String, Object> model) {
@@ -106,9 +103,6 @@ public class AlbumsController {
         }
         return new HttpEntity<>(imageBytes, headers);
     }
-
-
-
 
 
 
