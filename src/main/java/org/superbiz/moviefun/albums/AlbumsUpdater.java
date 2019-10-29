@@ -50,9 +50,17 @@ public class AlbumsUpdater {
         List<Album> albumsToHave = readFromCsv(objectReader, maybeBlob.get().inputStream);
         List<Album> albumsWeHave = albumsBean.getAlbums();
 
+        logger.debug("Starting createNewAlbums()");
         createNewAlbums(albumsToHave, albumsWeHave);
+        logger.debug("Finished createNewAlbums()");
+
+        logger.debug("Starting deleteOldAlbums()");
         deleteOldAlbums(albumsToHave, albumsWeHave);
+        logger.debug("Finished deleteOldAlbums()");
+
+        logger.debug("Starting updateExistingAlbums()");
         updateExistingAlbums(albumsToHave, albumsWeHave);
+        logger.debug("Finished updateExistingAlbums()");
     }
 
 
